@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto 100k </title>
+    <title>Projeto 100k - Operação Canoas</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -32,7 +32,7 @@
         window.FirebaseHelper = { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, setDoc, onSnapshot, collection };
     </script>
 </head>
-<body class="bg-gray-950 text-gray-100 flex justify-center h-screen overflow-hidden">
+<body class="bg-gray-950 text-gray-100 flex justify-center h-[100dvh] overflow-hidden">
 
     <div id="root" class="w-full max-w-md h-full relative shadow-2xl bg-gray-950 flex flex-col"></div>
 
@@ -187,8 +187,8 @@
                 const { db } = setupFirebase();
                 const { doc, onSnapshot, setDoc } = window.FirebaseHelper;
 
-                // Caminho seguro no banco de dados para os seus dados
-                const docRef = doc(db, 'artifacts', currentAppId, 'users', user.uid, 'finances', 'dados_atuais');
+                // Nova Rota Compartilhada: Sincroniza em todos os aparelhos
+                const docRef = doc(db, 'artifacts', currentAppId, 'public', 'data', 'finances', 'dados_pablo');
 
                 const unsub = onSnapshot(docRef, (docSnap) => {
                     if (docSnap.exists()) {
@@ -228,7 +228,8 @@
                     const fb = setupFirebase();
                     if (fb && user) {
                         const { doc, setDoc } = window.FirebaseHelper;
-                        const docRef = doc(fb.db, 'artifacts', currentAppId, 'users', user.uid, 'finances', 'dados_atuais');
+                        // Nova Rota Compartilhada: Sincroniza em todos os aparelhos
+                        const docRef = doc(fb.db, 'artifacts', currentAppId, 'public', 'data', 'finances', 'dados_pablo');
                         setDoc(docRef, newData); // O onSnapshot (acima) vai atualizar a tela automaticamente
                     }
                 }
@@ -537,7 +538,7 @@
                     </main>
 
                     {/* Floating Action Button (FAB) */}
-                    <div className="absolute bottom-20 right-6 z-40">
+                    <div className="absolute bottom-24 right-6 z-40">
                         <button 
                             onClick={() => setIsExpenseModalOpen(true)}
                             className="w-14 h-14 bg-emerald-500 hover:bg-emerald-600 text-gray-950 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-transform hover:scale-105 active:scale-95"
@@ -547,7 +548,7 @@
                     </div>
 
                     {/* Bottom Navigation */}
-                    <nav className="bg-gray-900 border-t border-gray-800 px-6 py-4 flex justify-between items-center absolute bottom-0 w-full z-30 pb-safe">
+                    <nav className="bg-gray-900 border-t border-gray-800 px-6 py-4 flex justify-between items-center shrink-0 z-30 pb-safe">
                         <button 
                             onClick={() => setActiveTab('home')}
                             className={`flex flex-col items-center gap-1 transition-colors ${activeTab === 'home' ? 'text-emerald-400' : 'text-gray-500'}`}
